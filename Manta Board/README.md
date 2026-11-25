@@ -83,10 +83,24 @@ drawings; check your own.
 ![Bed relay](images/2-bed-relay.svg)
 
 The TAZ 6 bed used here is 360 W (15 A at 24 V). The E3EZ bed output is rated 10 A, so it only drives a Crydom D1D40
-DC relay. Follow the + and − marks on the relay: load + faces the supply, and reversing it leaves the bed on.
+DC relay. Terminals, from Crydom's Series 1-DC datasheet: **1 is load −, 2 is load +, 3 is control +, 4 is control −**. Check
+them against the marks on your relay. Load + (2) faces the supply; reversing it leaves the bed on.
 WAGO connectors^ share the supply
 between the bed circuit and the toolhead. Use connectors and supply wire rated for the total, about 19 A. Fit both
 fuses, sized to suit your wire: the toolhead cable is much thinner than the bed wire and needs its own. Then and mount the relay on a heatsink. LulzBot's drawing specifies 16 AWG bed wire.
+
+### Test the relay before connecting the bed
+
+Put a 24 V lamp or fan in place of the bed, with the fuse fitted. It must draw at least 20 mA, the relay's minimum load.
+
+| Bed target | Lamp must be |
+|---|---|
+| 0 | Off |
+| Just above room temperature | On |
+| 0 again | Off |
+
+If it is lit with the target at 0, stop: the output is reversed or the relay is faulty. A continuity check between
+terminals 1 and 2 does not detect this. Keep the "on" step short; Klipper faults when the bed does not warm up.
 
 ## LCD harness
 
@@ -143,6 +157,19 @@ Keep both LCD plugs stock and seated by their keys. Count wires from wire 1 at e
 
 The cable supplied with the EBB kit carries all four wires and is split in the case: H and L go to the E3EZ, 24 V and
 GND to the WAGO connectors. Fit the E3EZ 120R jumper and keep the EBB's. With power off, H to L should measure about 60 Ω.
+
+## What has been verified
+
+| Item | Status |
+|---|---|
+| Relay terminal numbers | Read from Crydom's Series 1-DC datasheet. Check your relay's label agrees |
+| E3EZ ports, pins, HE1/HB polarity, jumpers, CAN | Read from BTT's schematic or pinout. Check the board's markings |
+| Archim2 Y MIN = PD6 | Matches Klipper's and Marlin's Archim2 pin files |
+| Stock harness pins and colours | Read from Aleph Objects' drawings. Check your harness |
+| LCD pins and harness | **Unverified**: read from a photo |
+| Motor plug colours and directions | **Unverified** |
+| WAGO rating, fuse sizes, wire gauge, toolhead current | **Unverified estimates**: check against your parts |
+| EBB wiring, including its 120 ohm jumper | **Unverified**: assumed unchanged |
 
 ## Sources and credits
 
